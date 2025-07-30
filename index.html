@@ -28,7 +28,10 @@
 
 <body>
     <h1>Analyze Image Colors</h1>
-    <img id="image" src="diddy.jpeg" alt="diddy.jpeg" crossorigin="anonymous" style="max-width:300px; display:block;" />
+
+    <!-- ✅ Path updated to point to the folder 'image/diddy.jpeg' -->
+    <img id="image" src="image/diddy.jpeg" alt="diddy.jpeg" crossorigin="anonymous" style="max-width:300px; display:block;" />
+
     <div id="status">Loading image...</div>
     <div id="colors"></div>
 
@@ -146,7 +149,7 @@
         };
 
         img.onerror = () => {
-            statusDiv.textContent = 'Failed to load image. Check the file path or CORS settings.';
+            statusDiv.textContent = '❌ Failed to load image. Make sure "image/diddy.jpeg" exists and the repo is published on GitHub Pages.';
         };
     </script>
 </body>
