@@ -29,7 +29,7 @@
 <body>
     <h1>Analyze Image Colors</h1>
 
-    <!-- Pointing to your GitHub folder 'image/diddy.jpeg' -->
+    <!-- Using local GitHub repo path: image/diddy.jpeg -->
     <img id="image" src="image/diddy.jpeg" alt="diddy.jpeg" crossorigin="anonymous"
         style="max-width:300px; display:block;" />
 
@@ -92,30 +92,13 @@
                 const colorCounts = {};
                 let countedPixels = 0;
 
-                function quantize(r, g, b) {
-                    return (
-                        Math.floor(r / 32) * 32 +
-                        ',' +
-                        Math.floor(g / 32) * 32 +
-                        ',' +
-                        Math.floor(b / 32) * 32
-                    );
-                }
-
-                function isNearWhite(r, g, b, a) {
-                    return (
-                        a < 128 ||
-                        (r > 240 && g > 240 && b > 240)
-                    );
-                }
-
                 for (let i = 0; i < data.length; i += 4) {
                     const r = data[i];
                     const g = data[i + 1];
                     const b = data[i + 2];
                     const a = data[i + 3];
 
-                    if (isNearWhite(r, g, b, a)) continue;
+                    if (a < 128) continue; // Skip transparent pixels
 
                     const colorName = getBasicColorName(r, g, b);
                     colorCounts[colorName] = (colorCounts[colorName] || 0) + 1;
@@ -123,7 +106,7 @@
                 }
 
                 if (countedPixels === 0) {
-                    statusDiv.textContent = 'No visible colors found (image may be transparent or white).';
+                    statusDiv.textContent = 'No visible colors found (image may be fully transparent).';
                     return;
                 }
 
@@ -154,7 +137,7 @@
         };
 
         img.onerror = () => {
-            statusDiv.textContent = '❌ Failed to load image. Make sure "image/diddy.jpeg" exists and the repo is published on GitHub Pages.';
+            statusDiv.textContent = '❌ Failed to load image. Make sure "image/diddy.jpeg" exists and works on GitHub Pages.';
         };
     </script>
 </body>
